@@ -3,7 +3,7 @@ using System;
 using UnityEngine;
 public class SingletonMonoBehaviour<T> : MonoBehaviour where T : MonoBehaviour
 {
-#warning ToDo instanciate
+//#warning ToDo instanciate
     static T _instance;
     public static T Instance
     {

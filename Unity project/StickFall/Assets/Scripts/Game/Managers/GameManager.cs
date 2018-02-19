@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+
+
 public class GameManager : SingletonMonoBehaviour<GameManager>
 {
+
     #region Helpers
 
     [System.Serializable]
@@ -47,8 +50,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     #region Unity lifecycle
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
 
         Debug.Log("GM AWAKE");
         Instantiate(_poolManager._prefab, _poolManager._ancor);
