@@ -15,6 +15,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     #endregion
 
+
     #region Fields
     [SerializeField]
     ManagerInfo _poolManager;
@@ -30,6 +31,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     #endregion
 
+
+    #region Properties
+
     public Camera MainCamera
     {
         get
@@ -38,8 +42,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
+    #endregion
+
+
+    #region Unity lifecycle
+
     private void Awake()
     {
+
+        Debug.Log("GM AWAKE");
         Instantiate(_poolManager._prefab, _poolManager._ancor);
 
         _managers.ForEach((manager) =>
@@ -50,5 +61,20 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
+        StartGame();
     }
+
+    #endregion
+
+
+    #region Public methods
+
+    public void StartGame()
+    {
+        PlayerManager.Instance.GeneratePlayer();
+        LevelManager.Instance.GenerateStartLevel();
+
+    }
+
+    #endregion
 }
