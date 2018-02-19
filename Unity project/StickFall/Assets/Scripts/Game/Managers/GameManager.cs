@@ -2,8 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : SingletonMonoBehaviour<GameManager>
+
+public class ClassTemp<T> : MonoBehaviour where T : MonoBehaviour
 {
+
+        static T _instance;
+        public static T Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+    protected virtual void Awake()
+    {
+        _instance = this as T;
+    }
+}
+
+
+public class GameManager : ClassTemp<GameManager>
+{
+
     #region Helpers
 
     [System.Serializable]
@@ -38,8 +59,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         }
     }
 
-    private void Awake()
+    protected override void Awake() 
     {
+        base.Awake();
+//        _instance = this;
         Instantiate(_poolManager._prefab, _poolManager._ancor);
 
         _managers.ForEach((manager) =>

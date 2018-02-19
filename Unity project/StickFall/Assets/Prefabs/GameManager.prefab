@@ -59,5 +59,3 @@ MonoBehaviour:
   _managers:
   - _prefab: {fileID: 1625868466862098, guid: d1ceb2bb8082328458f6a94957111d7d, type: 2}
     _ancor: {fileID: 4880945255500482}
-  - _prefab: {fileID: 1563987414238836, guid: 598c9ac3043007e43b62d5f7ef1c22f4, type: 2}
-    _ancor: {fileID: 0}
