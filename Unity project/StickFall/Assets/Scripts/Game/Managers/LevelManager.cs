@@ -13,6 +13,18 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
     #endregion
 
 
+    #region Properties
+
+    public LevelPlatform LastBlockForUser
+    {
+        get
+        {
+            return _platformsOnScreen[_platformsOnScreen.Count - 1];
+        }
+    }
+
+    #endregion
+
     #region Unity lifecycle
 
     private void Awake()
@@ -66,7 +78,7 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
         _platformsOnScreen.Add(platfom);
     }
 
-    private void GenerateNextPlatform(float distance, float width)
+    public void GenerateNextPlatform(float distance, float width)
     {
         var lastPlatform = _platformsOnScreen[_platformsOnScreen.Count - 1];
 
@@ -77,6 +89,12 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
         float newXCoordinate = lastPlatform.Width * 0.5f + lastPlatform.transform.localPosition.x + distance + width * 0.5f;
 
         platfom.transform.localPosition = new Vector3(newXCoordinate, platfom.transform.localPosition.y, platfom.transform.localPosition.z);
+
+        if(_platformsOnScreen.Count > 2)
+        {
+            _platformsOnScreen[0].gameObject.ReturnToPool();
+            _platformsOnScreen.Remove(_platformsOnScreen[0]);
+        }
     }
 
     void ClearLevel()

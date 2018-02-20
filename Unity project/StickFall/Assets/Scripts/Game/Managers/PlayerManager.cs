@@ -34,9 +34,6 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     {
     }
 
-    void Update()
-    {
-    }
 
     #endregion
 
@@ -55,5 +52,11 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     }
 
     #endregion
+
+    #region Private methods
     
+    
+
+    #endregion
+
 }

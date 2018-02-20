@@ -15,6 +15,21 @@ public class Player : MonoBehaviour
     #endregion
 
 
+    #region Unity lifecycle
+
+    private void OnEnable()
+    {
+        GameManager.OnPlayerStartMove += GameManager_OnPlayerStartMove;
+    }
+
+    private void OnDisable()
+    {
+        GameManager.OnPlayerStartMove -= GameManager_OnPlayerStartMove;
+    }
+
+    #endregion
+
+
     #region Public methods
 
     public void Respawn()
@@ -35,14 +50,7 @@ public class Player : MonoBehaviour
             
             if (a.phase == TouchPhase.Began )
             {
-                allowToMove = false;
-
-                GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-                Vector2 position = GameManager.Instance.MainCamera.ScreenToWorldPoint(a.position);
-                transform.DOMove(position, 0.3f).SetEase(mooveCurve).OnComplete(() =>
-                {
-                    allowToMove = true;
-                });
+               
 
             }
         }
@@ -50,5 +58,28 @@ public class Player : MonoBehaviour
 
     #endregion
 
+    #region Event handlers
 
+    private void GameManager_OnPlayerStartMove()
+    {
+        float speed = 100;
+        LevelPlatform nextPlatform = LevelManager.Instance.LastBlockForUser;
+        float distance = Mathf.Abs((transform.position - nextPlatform.transform.position).z);
+
+        float time = distance / speed;
+
+        allowToMove = false;
+
+        GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        Vector2 position = nextPlatform.transform.position;
+        transform.DOMove(position, time).SetEase(mooveCurve).OnComplete(() =>
+        {
+            allowToMove = true;
+
+            GameManager.Instance.PlayerStoped();
+
+        });
+    }
+
+    #endregion
 }
