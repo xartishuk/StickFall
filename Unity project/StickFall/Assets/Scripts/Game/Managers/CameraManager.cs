@@ -7,10 +7,19 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
 {
     private Camera _camera;
 
+    public float GUIScaler
+    {
+        get
+        {
+            return (float)_camera.pixelWidth / (float)1080;
+        }
+    }
+
     protected override void Awake()
     {
         base.Awake();
         _camera = Camera.main;
+        _camera.orthographicSize = 960;//_camera.pixelHeight * 0.5f;
     }
 
     private void OnEnable()

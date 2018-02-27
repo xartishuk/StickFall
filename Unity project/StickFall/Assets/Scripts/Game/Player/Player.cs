@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
     public void Respawn()
     {
-        transform.position = Vector3.zero;
+        transform.localPosition = Vector3.zero;
     }
 
     #endregion
@@ -71,7 +71,7 @@ public class Player : MonoBehaviour
         allowToMove = false;
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        Vector2 position = nextPlatform.transform.position;
+        Vector2 position = new Vector3(nextPlatform.transform.position.x, transform.position.y, transform.position.z);
         transform.DOMove(position, time).SetEase(mooveCurve).OnComplete(() =>
         {
             allowToMove = true;

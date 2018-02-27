@@ -95,7 +95,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         set
         {
             _currentGameState = value;
-            Debug.Log(_currentGameState);
+            //Debug.Log(_currentGameState);
         }
     }
 
@@ -162,10 +162,27 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         CurrentGameState = GameState.AwakeTap;
 
-        float distance = Random.Range(5f, 30f);
-        float width = Random.Range(10f, 30f);
+        float distance = Random.Range(50f, 300f);
+        float width = Random.Range(150f, 400f);
 
         LevelManager.Instance.GenerateNextPlatform(distance, width);
+    }
+
+    public void StickStartFall()
+    {
+        if (OnStickStartFall != null)
+        {
+            OnStickStartFall();
+        }
+    }
+    public void StickStopFall()
+    {
+        if (OnStickStopFall != null)
+        {
+            OnStickStopFall();
+        }
+
+        PlayerStarted();
     }
 
     #endregion
@@ -195,8 +212,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
                         OnStickStopGrow();
                     }
                     CurrentGameState = GameState.ClickUp;
-
-                    PlayerStarted();
 
                 }
                 break;

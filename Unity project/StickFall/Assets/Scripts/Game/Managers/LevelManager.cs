@@ -10,6 +10,8 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
     List<LevelPlatform> _platformsOnScreen;
 
+    [SerializeField] AnimationCurve _fallStickCurve;
+    [SerializeField] float _fallStickDuaration;
     #endregion
 
 
@@ -22,6 +24,22 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
             return _platformsOnScreen[_platformsOnScreen.Count - 1];
         }
     }
+
+    public AnimationCurve FallStickCurve
+    {
+        get
+        {
+            return _fallStickCurve;
+        }
+    }
+    public float FallStickDuaration
+    {
+        get
+        {
+            return _fallStickDuaration;
+        }
+    }
+
 
     #endregion
 
@@ -58,8 +76,8 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
         GenerateFirstPlatform();
 
-        float distance = Random.Range(5f, 30f);
-        float width = Random.Range(10f, 30f);
+        float distance = Random.Range(50f, 300f);
+        float width = Random.Range(150f, 400f);
 
         GenerateNextPlatform(distance, width);
 
@@ -72,15 +90,18 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
     private void GenerateFirstPlatform()
     {
-        float width = 10;
+        float width = 200;
         LevelPlatform platfom = ObjectCreator.CreateObject(_platformPrefab, transform).GetComponent<LevelPlatform>();
         platfom.Init(width);
+        platfom.IsActive = true;
         _platformsOnScreen.Add(platfom);
     }
 
     public void GenerateNextPlatform(float distance, float width)
     {
         var lastPlatform = _platformsOnScreen[_platformsOnScreen.Count - 1];
+
+        lastPlatform.IsActive = true;
 
         LevelPlatform platfom = ObjectCreator.CreateObject(_platformPrefab, transform).GetComponent<LevelPlatform>();
         platfom.Init(width);

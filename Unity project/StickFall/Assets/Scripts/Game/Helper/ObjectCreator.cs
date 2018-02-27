@@ -19,9 +19,11 @@ public class ObjectCreator
 
         //GameObject obj = Object.Instantiate(prefab);
 
-        obj.transform.position = _transform.position;
+        //obj.transform.position = _transform.position;
 
         obj.transform.parent = _transform;
+
+        obj.transform.localPosition = Vector3.zero;
 
         return obj;
     }
