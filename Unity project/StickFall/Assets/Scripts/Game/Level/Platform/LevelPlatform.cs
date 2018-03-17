@@ -48,6 +48,15 @@ public class LevelPlatform : BaseObject
         get;
         set;
     }
+
+    public StickController StickController
+    {
+        get
+        {
+            return _stick;
+        }
+    }
+
     #endregion
 
 

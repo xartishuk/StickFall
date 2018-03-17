@@ -43,6 +43,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public static event System.Action OnGameStarted;
     public static event System.Action OnGameResumed;
     public static event System.Action OnGamePaused;
+    public static event System.Action OnGameOver;
 
     [SerializeField]
     ManagerInfo _poolManager;
@@ -151,6 +152,15 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         {
             OnPlayerStartMove();
         }
+    }
+
+    public void TryKillPlayer()
+    {
+        GameManager.Instance.StartGame();
+        //if (OnGameOver != null)
+        //{
+        //    OnGameOver();
+        //}
     }
 
     public void PlayerStoped()

@@ -52,4 +52,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _personages:
-  - {fileID: 114505785060049858, guid: 301eec7aa8a85e341983bb555cb18a76, type: 2}
+  - {fileID: 114515099808914040, guid: c890e0d530d444b9db8cc0d13f6e750b, type: 2}

@@ -24,6 +24,13 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
             return _platformsOnScreen[_platformsOnScreen.Count - 1];
         }
     }
+    public LevelPlatform CurrentBlockForUser
+    {
+        get
+        {
+            return _platformsOnScreen[_platformsOnScreen.Count - 2];
+        }
+    }
 
     public AnimationCurve FallStickCurve
     {

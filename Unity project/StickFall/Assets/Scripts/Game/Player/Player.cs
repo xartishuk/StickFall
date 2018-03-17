@@ -12,11 +12,20 @@ public enum PersonageType
     Default = 1,
 }
 
+public enum StopPlayerAt
+{
+    None = 0,
+    Platform = 1,
+    Stick = 2,
+}
+
 public class Player : BaseObject
 {
     #region Fields
     
     [SerializeField] PersonageType _type;
+
+    StopPlayerAt stopPlayerAt;
 
     bool allowToMove = true;
 
@@ -64,21 +73,59 @@ public class Player : BaseObject
 
     private void GameManager_OnPlayerStartMove()
     {
-        float speed = 100;
+        float speed = 900;
+
         LevelPlatform nextPlatform = LevelManager.Instance.LastBlockForUser;
-        float distance = Mathf.Abs((transform.position - nextPlatform.transform.position).z);
+        Vector3 endStickPosition = LevelManager.Instance.CurrentBlockForUser.StickController.EndStickPosition;
+
+        if (nextPlatform.transform.position.x - nextPlatform.Width * 0.5f > endStickPosition.x)
+        {
+            Debug.Log("Nedohod");
+            stopPlayerAt = StopPlayerAt.Stick;
+        }
+        else if (nextPlatform.transform.position.x + nextPlatform.Width * 0.5f < endStickPosition.x)
+        {
+            Debug.Log("Perehod");
+            stopPlayerAt = StopPlayerAt.Stick;
+        }
+        else
+        {
+            Debug.Log("Perfect");
+            stopPlayerAt = StopPlayerAt.Platform;
+        }
+        float distance = 0f;
+        switch (stopPlayerAt)
+        {
+            case StopPlayerAt.Platform:
+                distance = Mathf.Abs((transform.position - nextPlatform.transform.position).x);
+                break;
+
+            case StopPlayerAt.Stick:
+                distance = Mathf.Abs((transform.position - endStickPosition).x);
+                break;
+
+        }
+        
 
         float time = distance / speed;
 
         allowToMove = false;
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
-        Vector2 position = new Vector3(nextPlatform.transform.position.x, transform.position.y, transform.position.z);
+
+        Vector2 position = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
         transform.DOMove(position, time).OnComplete(() =>
         {
-            allowToMove = true;
+            if(stopPlayerAt == StopPlayerAt.Stick)
+            {
+                GameManager.Instance.TryKillPlayer();
+            }
+            else
+            {
+                allowToMove = true;
 
-            GameManager.Instance.PlayerStoped();
+                GameManager.Instance.PlayerStoped();
+            }
 
         });
     }

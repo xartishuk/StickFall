@@ -11,6 +11,7 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     Player playerInstance;
 
     PersonageType currentPersonage = PersonageType.Default;
+
     #endregion
 
 
