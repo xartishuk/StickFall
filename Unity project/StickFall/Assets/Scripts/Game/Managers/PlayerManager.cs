@@ -6,10 +6,11 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 {
 
     #region Fields
-
-    [SerializeField] Player _player;
+    
+    [SerializeField] List<Player> _personages;
     Player playerInstance;
 
+    PersonageType currentPersonage = PersonageType.Default;
     #endregion
 
 
@@ -20,7 +21,10 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
         get
         {
             if (playerInstance == null)
-                playerInstance = ObjectCreator.CreateObject(_player.gameObject, transform).GetComponent<Player>();
+            {
+                GameObject currentPerson = _personages.Find(obj => obj.Type == currentPersonage).gameObject;
+                playerInstance = ObjectCreator.CreateObject(currentPerson, transform).GetComponent<Player>();
+            }
             return playerInstance;
         }
     }

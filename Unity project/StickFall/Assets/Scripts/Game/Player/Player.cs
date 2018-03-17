@@ -4,13 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Player : MonoBehaviour
+
+[System.Serializable]
+public enum PersonageType
+{
+    None = 0,
+    Default = 1,
+}
+
+public class Player : BaseObject
 {
     #region Fields
-
-    [SerializeField] AnimationCurve mooveCurve;
+    
+    [SerializeField] PersonageType _type;
 
     bool allowToMove = true;
+
+    #endregion
+
+    #region Properties
+
+    public PersonageType Type
+    {
+        get
+        {
+            return _type;
+        }
+    }
 
     #endregion
 
@@ -38,25 +58,7 @@ public class Player : MonoBehaviour
     }
 
     #endregion
-
-    #region Private methods
-
-	private void Update ()
-    {
-        List<Touch> touches = InputHelper.GetTouches();
-        if (touches.Count > 0 && allowToMove)
-        {
-            var a = touches[0];
-            
-            if (a.phase == TouchPhase.Began )
-            {
-               
-
-            }
-        }
-	}
-
-    #endregion
+    
 
     #region Event handlers
 
@@ -72,7 +74,7 @@ public class Player : MonoBehaviour
 
         GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         Vector2 position = new Vector3(nextPlatform.transform.position.x, transform.position.y, transform.position.z);
-        transform.DOMove(position, time).SetEase(mooveCurve).OnComplete(() =>
+        transform.DOMove(position, time).OnComplete(() =>
         {
             allowToMove = true;
 

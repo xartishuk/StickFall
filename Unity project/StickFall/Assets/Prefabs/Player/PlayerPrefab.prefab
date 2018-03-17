@@ -50,7 +50,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4315608811923786}
-  - component: {fileID: 114572466174466722}
+  - component: {fileID: 114475293852604434}
   - component: {fileID: 50123156663115456}
   m_Layer: 0
   m_Name: PlayerPrefab
@@ -175,7 +175,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 55, y: 84}
   m_EdgeRadius: 0
---- !u!114 &114572466174466722
+--- !u!114 &114475293852604434
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -183,33 +183,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1775196094687334}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b330a994500a3e34b81af673472dbe96, type: 3}
+  m_Script: {fileID: 11500000, guid: 2d0cfa834281a914dad82566556fde2d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mooveCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 2
-      time: 0
-      value: 0
-      inSlope: 2
-      outSlope: 2
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 0.3905396
-      value: -0.037521422
-      inSlope: 1.4102459
-      outSlope: 1.4102459
-      tangentMode: 0
-    - serializedVersion: 2
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 0
+  _type: 1
 --- !u!212 &212700895203214990
 SpriteRenderer:
   m_ObjectHideFlags: 1
