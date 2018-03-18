@@ -692,3 +692,37 @@ MonoBehaviour:
     loadable: 0
     assetName: 
     version: 3
+  - name: TestBackground
+    spriteCollectionGUID: ab6f7d0887633494cba1b38646284260
+    spriteCollectionDataGUID: 80ddc0b5d5bedfd40ae1afc8a30cc544
+    spriteNames:
+    - sky
+    - cloud
+    - cloud_big_3
+    - cloud_big_2
+    - cloud_2
+    - cloud_big
+    - mount2
+    - mount1
+    spriteTextureGUIDs:
+    - 3ce97fede5e994b49a1c34711b32e725
+    - c8282c4a7fe3a6d4a86dea372f7c3069
+    - d0b50e25ddbafa24d8abaf036e79a135
+    - cb575cb5aa7acaa45aa4b40237b7c1cd
+    - af8c7db1df7e9f249b051af810399b27
+    - a880385f30b7f604f97602a671baae73
+    - 7b4039715f479d6409542ae1be525870
+    - 8388b539622e2f247917e9d56e5c8bc1
+    spriteTextureTimeStamps:
+    - 1521340893.47763
+    - 1521340808.86211
+    - 1521340780.13841
+    - 1521340755.95847
+    - 1521340845.53522
+    - 1521340724.87731
+    - 1521343342.39494
+    - 1521343348.8618
+    managedSpriteCollection: 0
+    loadable: 0
+    assetName: 
+    version: 3

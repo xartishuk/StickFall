@@ -33,6 +33,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
 
     #region Fields
+
+    public static event System.Action OnCameraChangedPosition;
+
     public static event System.Action OnStickStartGrow;
     public static event System.Action OnStickStopGrow;
     public static event System.Action OnStickStartFall;
@@ -49,9 +52,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     ManagerInfo _poolManager;
 
     [SerializeField]
-    Camera _camera;
-
-    [SerializeField]
     List<ManagerInfo> _coreManagers;
 
     [SerializeField]
@@ -66,14 +66,6 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
 
     #region Properties
-
-    public Camera MainCamera
-    {
-        get
-        {
-            return _camera;
-        }
-    }
 
     public ScreenState CurrentScreenState
     {
@@ -157,10 +149,10 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
     public void TryKillPlayer()
     {
         GameManager.Instance.StartGame();
-        //if (OnGameOver != null)
-        //{
-        //    OnGameOver();
-        //}
+        if (OnGameOver != null)
+        {
+            OnGameOver();
+        }
     }
 
     public void PlayerStoped()

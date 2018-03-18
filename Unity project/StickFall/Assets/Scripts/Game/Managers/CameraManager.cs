@@ -7,6 +7,16 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
 {
     private Camera _camera;
 
+    public static event System.Action<Vector3> OnCameraPositionChanged;
+
+    public Vector3 CurrentCameraDeltaVector
+    {
+        get
+        {
+            return currentCameraPosition - prevCameraPosition;
+        }
+    }
+
     public float GUIScaler
     {
         get
@@ -24,6 +34,8 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
 
     private void OnEnable()
     {
+        prevCameraPosition = _camera.transform.position;
+        currentCameraPosition = _camera.transform.position;
         GameManager.OnPlayerStopMove += GameManager_OnPlayerStopMove;
     }
     private void OnDisable()
@@ -35,10 +47,33 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
     {
         _camera.transform.position = new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, _camera.transform.position.y, _camera.transform.position.z);
 
+        prevCameraPosition = _camera.transform.position;
+        currentCameraPosition = _camera.transform.position;
+        OnChangedCameraPosition();
+    }
+
+    Vector3 prevCameraPosition;
+    Vector3 currentCameraPosition;
+
+    void OnChangedCameraPosition()
+    {
+        prevCameraPosition = currentCameraPosition;
+        currentCameraPosition = _camera.transform.position;
+
+        if (prevCameraPosition != currentCameraPosition)
+        {
+            if (OnCameraPositionChanged != null)
+            {
+                OnCameraPositionChanged(currentCameraPosition);
+            }
+        }
     }
 
     private void GameManager_OnPlayerStopMove()
     {
-        _camera.transform.DOMove(new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, _camera.transform.position.y, _camera.transform.position.z), 0.2f);
+        _camera.transform.DOMove(new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, _camera.transform.position.y, _camera.transform.position.z), 0.2f).OnUpdate(() =>
+        {
+            OnChangedCameraPosition();
+        });
     }
 }
