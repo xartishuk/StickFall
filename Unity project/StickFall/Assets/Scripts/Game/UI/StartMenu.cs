@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class StartMenu : MonoBehaviour {
+public class StartMenu : MonoBehaviour 
+{
+	#region Public methods
+
 	public void PlayPressed()
 	{
 		SceneManager.LoadScene("Main");
@@ -13,4 +16,6 @@ public class StartMenu : MonoBehaviour {
 	{
 		Application.Quit();
 	}
+
+	#endregion
 }
