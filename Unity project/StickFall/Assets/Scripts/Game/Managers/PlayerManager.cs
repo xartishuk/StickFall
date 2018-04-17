@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 {
+    public static event System.Action<Vector2> OnPlayerChangedPosition;
 
     #region Fields
-    
+
     [SerializeField] List<Player> _personages;
     Player playerInstance;
 
@@ -35,7 +36,23 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
 
     #region Unity lifecycle
 
+    private void OnEnable()
+    {
+        Player.OnPlayerChangedPosition += PlayerInstance_OnPlayerChangedPosition;
+    }
+
+
+    private void OnDisable()
+    {
+        Player.OnPlayerChangedPosition -= PlayerInstance_OnPlayerChangedPosition;
+    }
+
+
     private void Awake()
+    {
+    }
+
+    private void Update()
     {
     }
 
@@ -59,9 +76,17 @@ public class PlayerManager : SingletonMonoBehaviour<PlayerManager>
     #endregion
 
     #region Private methods
-    
-    
+
+
 
     #endregion
 
+
+    private void PlayerInstance_OnPlayerChangedPosition(Vector2 offset)
+    {
+        if(OnPlayerChangedPosition != null)
+        {
+            OnPlayerChangedPosition(offset);
+        }
+    }
 }

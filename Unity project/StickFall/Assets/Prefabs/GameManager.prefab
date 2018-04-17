@@ -360,7 +360,6 @@ MonoBehaviour:
   _poolManager:
     _prefab: {fileID: 1340064067423804, guid: 7d978109a0a3a3c4686ce6783feaa90b, type: 2}
     _ancor: {fileID: 4880945255500482}
-  _camera: {fileID: 0}
   _coreManagers: []
   _managers:
   - _prefab: {fileID: 1625868466862098, guid: d1ceb2bb8082328458f6a94957111d7d, type: 2}
@@ -370,6 +369,8 @@ MonoBehaviour:
   - _prefab: {fileID: 1833854840014848, guid: 89c76ba379ae06b4581318076819900b, type: 2}
     _ancor: {fileID: 4448114939752154}
   - _prefab: {fileID: 1594145914591436, guid: 1d1903033af6fa942a9e2db182634cbc, type: 2}
+    _ancor: {fileID: 4880945255500482}
+  - _prefab: {fileID: 1866927312842544, guid: 6453849e35ac5e04db6f4cda96207ad0, type: 2}
     _ancor: {fileID: 4880945255500482}
 --- !u!114 &114518607667757188
 MonoBehaviour:

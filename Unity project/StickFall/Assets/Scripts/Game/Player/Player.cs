@@ -21,8 +21,15 @@ public enum StopPlayerAt
 
 public class Player : BaseObject
 {
+
+    #region Events
+
+    public static event System.Action<Vector2> OnPlayerChangedPosition;
+
+    #endregion
+
     #region Fields
-    
+
     [SerializeField] PersonageType _type;
 
     StopPlayerAt stopPlayerAt;
@@ -55,6 +62,18 @@ public class Player : BaseObject
     {
         GameManager.OnPlayerStartMove -= GameManager_OnPlayerStartMove;
     }
+    Vector3 prevPosition;
+    private void Update()
+    {
+        if(prevPosition != transform.position)
+        {
+            if (OnPlayerChangedPosition != null)
+            {
+                OnPlayerChangedPosition(transform.position - prevPosition);
+            }
+            prevPosition = transform.position;
+        }
+    }
 
     #endregion
 
@@ -64,6 +83,7 @@ public class Player : BaseObject
     public void Respawn()
     {
         transform.localPosition = Vector3.zero;
+        prevPosition = transform.position;
     }
 
     #endregion

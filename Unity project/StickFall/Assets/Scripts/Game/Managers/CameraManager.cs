@@ -5,9 +5,23 @@ using DG.Tweening;
 
 public class CameraManager : SingletonMonoBehaviour<CameraManager>
 {
-    private Camera _camera;
+    [SerializeField] BoxCollider2D _cameraCollider;
+    
+    private Camera _camera = null;
+    private Camera Camera
+    {
+        get
+        {
+            if(_camera == null)
+            {
+                _camera = Camera.main;
+            }
+            return _camera;
+        }
+    }
 
-    public static event System.Action<Vector3> OnCameraPositionChanged;
+
+    public static event System.Action<Vector2> OnCameraPositionChanged;
 
     public Vector3 CurrentCameraDeltaVector
     {
@@ -21,34 +35,60 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
     {
         get
         {
-            return (float)_camera.pixelWidth / (float)1080;
+            return (float)Camera.pixelWidth / (float)1080;
+        }
+    }
+
+    public Vector3 CameraRightBottomPosition
+    {
+        get
+        {
+            return Camera.ScreenToWorldPoint(new Vector3(Camera.pixelWidth, 0));
+        }
+    }
+
+    public Vector3 CameraLeftTopPosition
+    {
+        get
+        {
+            return Camera.ScreenToWorldPoint(new Vector3(0, Camera.pixelHeight));
         }
     }
 
     protected override void Awake()
     {
         base.Awake();
-        _camera = Camera.main;
-        _camera.orthographicSize = 960;//_camera.pixelHeight * 0.5f;
+        Camera.orthographicSize = 960;//_camera.pixelHeight * 0.5f;
     }
 
     private void OnEnable()
     {
-        prevCameraPosition = _camera.transform.position;
-        currentCameraPosition = _camera.transform.position;
+        prevCameraPosition = Camera.transform.position;
+        currentCameraPosition = Camera.transform.position;
         GameManager.OnPlayerStopMove += GameManager_OnPlayerStopMove;
     }
+
+
     private void OnDisable()
     {
         GameManager.OnPlayerStopMove -= GameManager_OnPlayerStopMove;
     }
 
+    private void Update()
+    {
+        //var bounds = _cameraCollider.bounds;
+        //bounds.center = _camera.transform.position;
+        //bounds.extents = _camera.pixelRect.size * 0.5f;
+        _cameraCollider.size = new Vector2(Camera.orthographicSize, Camera.orthographicSize / Camera.aspect);
+        _cameraCollider.transform.position = Camera.transform.position;
+    }
+
     public void Respawn()
     {
-        _camera.transform.position = new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, _camera.transform.position.y, _camera.transform.position.z);
+        Camera.transform.position = new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, Camera.transform.position.y, Camera.transform.position.z);
 
-        prevCameraPosition = _camera.transform.position;
-        currentCameraPosition = _camera.transform.position;
+        prevCameraPosition = Camera.transform.position;
+        currentCameraPosition = Camera.transform.position;
         OnChangedCameraPosition();
     }
 
@@ -58,7 +98,7 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
     void OnChangedCameraPosition()
     {
         prevCameraPosition = currentCameraPosition;
-        currentCameraPosition = _camera.transform.position;
+        currentCameraPosition = Camera.transform.position;
 
         if (prevCameraPosition != currentCameraPosition)
         {
@@ -71,7 +111,7 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
 
     private void GameManager_OnPlayerStopMove()
     {
-        _camera.transform.DOMove(new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, _camera.transform.position.y, _camera.transform.position.z), 0.2f).OnUpdate(() =>
+        Camera.transform.DOMove(new Vector3((PlayerManager.Instance.PlayerInstance.transform.position).x + 5, Camera.transform.position.y, Camera.transform.position.z), 0.2f).OnUpdate(() =>
         {
             OnChangedCameraPosition();
         });

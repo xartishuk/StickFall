@@ -8,6 +8,7 @@ public enum ColliderType
     PlatformStoper = 1,
 
     StickStoper = 100,
+    CameraCollider = 101,
 }
 
 public class ColliderReporter : MonoBehaviour
