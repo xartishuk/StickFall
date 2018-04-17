@@ -104,7 +104,7 @@ public class CameraManager : SingletonMonoBehaviour<CameraManager>
         {
             if (OnCameraPositionChanged != null)
             {
-                OnCameraPositionChanged(currentCameraPosition);
+                OnCameraPositionChanged(currentCameraPosition - prevCameraPosition);
             }
         }
     }

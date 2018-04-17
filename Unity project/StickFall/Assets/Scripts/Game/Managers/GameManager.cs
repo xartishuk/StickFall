@@ -187,6 +187,11 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         PlayerStarted();
     }
 
+    public void PerfectStick()
+    {
+        Debug.Log("PERFECTO!");
+    }
+
     #endregion
 
 

@@ -4,12 +4,22 @@ using UnityEngine;
 
 public class ParalixebleObject : BaseObject
 {
+    #region Fields
 
-    [SerializeField] float absCameraSpeed;
+    [SerializeField] float absSpeed;
+    [SerializeField] float offset;
     [SerializeField] GameObject prefab;
+    [SerializeField] bool isCameraFollow;
 
     [SerializeField] List<GameObject> objectsOnScreen = new List<GameObject>();
 
+    bool NeedInsert = false;
+    bool NeedHide = false;
+
+    #endregion
+
+
+    #region Properties
     float RightBackgroundPosition
     {
         get
@@ -22,6 +32,8 @@ public class ParalixebleObject : BaseObject
             return position;
         }
     }
+
+
     float LeftBackgroundPosition
     {
         get
@@ -40,10 +52,13 @@ public class ParalixebleObject : BaseObject
         get;
         private set;
     }
-    bool NeedInsert = false;
-    bool NeedHide = false;
 
-    private void Update()
+    #endregion
+
+
+    #region Unity lifecycle
+
+    public void CustomUpdate(float deltaTime)
     {
         if (NeedInsert)
         {
@@ -60,52 +75,37 @@ public class ParalixebleObject : BaseObject
 
     private void OnEnable()
     {
-        PlayerManager.OnPlayerChangedPosition += PlayerManager_OnPlayerChangedPosition;
+        if(isCameraFollow)
+        {
+            CameraManager.OnCameraPositionChanged += ChangePositionByOffsetEvent;
+        }
+        else
+        {
+            PlayerManager.OnPlayerChangedPosition += ChangePositionByOffsetEvent;
+        }
         CameraManager.OnCameraPositionChanged += CameraManager_OnCameraPositionChanged;
         GameManager.OnGameOver += GameManager_OnGameOver;
     }
 
-    private void GameManager_OnGameOver()
-    {
-        for (int i = 0; i < objectsOnScreen.Count; i++)
-        {
-            objectsOnScreen[i].ReturnToPool();
-        }
-
-        objectsOnScreen.Clear();
-
-        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
-
-        do
-        {
-            Add();
-        } while (RightBackgroundPosition < CameraManager.Instance.CameraRightBottomPosition.x);
-    }
 
     private void OnDisable()
     {
-        PlayerManager.OnPlayerChangedPosition -= PlayerManager_OnPlayerChangedPosition;
+        if (isCameraFollow)
+        {
+            CameraManager.OnCameraPositionChanged += ChangePositionByOffsetEvent;
+        }
+        else
+        {
+            PlayerManager.OnPlayerChangedPosition += ChangePositionByOffsetEvent;
+        }
         CameraManager.OnCameraPositionChanged -= CameraManager_OnCameraPositionChanged;
         GameManager.OnGameOver -= GameManager_OnGameOver;
     }
 
-    private void PlayerManager_OnPlayerChangedPosition(Vector2 offset)
-    {
-        transform.position += (Vector3.right * offset.x) * absCameraSpeed;
-    }
+    #endregion
 
-    private void CameraManager_OnCameraPositionChanged(Vector2 offset)
-    {
-        if (RightBackgroundPosition < CameraManager.Instance.CameraRightBottomPosition.x)
-        {
-            NeedInsert = true;
-        }
-        if (LeftBackgroundPosition < CameraManager.Instance.CameraLeftTopPosition.x)
-        {
-            NeedHide = true;
-        }
-    }
     
+    #region Public methods
 
     public void Init()
     {
@@ -144,5 +144,45 @@ public class ParalixebleObject : BaseObject
         objectsOnScreen.RemoveAt(0);
     }
 
+    #endregion
+
+
+    #region Event handlers
+
+    private void ChangePositionByOffsetEvent(Vector2 offset)
+    {
+        transform.position += (Vector3.right * offset.x) * absSpeed;
+    }
+
+    private void CameraManager_OnCameraPositionChanged(Vector2 offset)
+    {
+        if (RightBackgroundPosition + this.offset < CameraManager.Instance.CameraRightBottomPosition.x)
+        {
+            NeedInsert = true;
+        }
+        if (LeftBackgroundPosition < CameraManager.Instance.CameraLeftTopPosition.x)
+        {
+            NeedHide = true;
+        }
+    }
+
+    private void GameManager_OnGameOver()
+    {
+        for (int i = 0; i < objectsOnScreen.Count; i++)
+        {
+            objectsOnScreen[i].ReturnToPool();
+        }
+
+        objectsOnScreen.Clear();
+
+        transform.position = new Vector3(0f, transform.position.y, transform.position.z);
+
+        do
+        {
+            Add();
+        } while (RightBackgroundPosition < CameraManager.Instance.CameraRightBottomPosition.x);
+    }
+
+    #endregion
 
 }

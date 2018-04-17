@@ -4,23 +4,25 @@ using UnityEngine;
 
 public class ParalaxManager : SingletonMonoBehaviour<ParalaxManager>
 {
-    //[System.Serializable]
-    //class ParalaxInfo
-    //{
-    //    public GameObject prefab;
-    //    public Transform transform;
-    //}
-
+    
     [SerializeField] List<ParalixebleObject> paralaxObjects;
-
-    //List<ParalaxInfo> paralaxObjects;
+    
 
     private void Awake()
     {
         paralaxObjects.ForEach((obj) =>
         {
             obj.Init();
-            //obje
+        });
+    }
+
+
+    private void Update()
+    {
+        float deltaTime = Time.deltaTime;
+        paralaxObjects.ForEach((obj) =>
+        {
+            obj.CustomUpdate(deltaTime);
         });
     }
 

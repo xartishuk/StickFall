@@ -8,8 +8,9 @@ public class StickController : BaseObject
 
     [SerializeField] BoxCollider2D _mainCollider;
     [SerializeField] BoxCollider2D _stoperCollider;
+    [SerializeField] BoxCollider2D _perfectCollider;
     [SerializeField] GameObject _stick;
-    float _growSpeed = 45;
+    float _growSpeed = 450;
     float _fallSpeed = 0.7f;
 
 
@@ -32,6 +33,7 @@ public class StickController : BaseObject
 
         _mainCollider.enabled = false;
         _stoperCollider.enabled = false;
+        _perfectCollider.enabled = false;
     }
 
 	// Use this for initialization
@@ -64,12 +66,24 @@ public class StickController : BaseObject
 
     public void FallStick()
     {
+
         _stick.transform.DORotate(new Vector3(0f, 0f, 270f), LevelManager.Instance.FallStickDuaration).SetEase(LevelManager.Instance.FallStickCurve).OnComplete(() =>
             {
-                GameManager.Instance.StickStopFall();
+
+                _mainCollider.size = new Vector2(_stick.transform.localScale.y, 10f);
+                _mainCollider.offset = new Vector2(_stick.transform.localScale.y * 0.5f, 5f);
+
+
+                _perfectCollider.transform.localPosition = new Vector3(_stick.transform.localScale.y, 0f, 0f);
+                _stoperCollider.transform.localPosition = new Vector3(_stick.transform.localScale.y, 0f, 0f);
 
                 _mainCollider.enabled = true;
                 _stoperCollider.enabled = true;
+                _perfectCollider.enabled = true;
+
+
+                GameManager.Instance.StickStopFall();
+
             }
         );
 

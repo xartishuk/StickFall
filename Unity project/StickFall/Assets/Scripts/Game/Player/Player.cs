@@ -97,6 +97,8 @@ public class Player : BaseObject
 
         LevelPlatform nextPlatform = LevelManager.Instance.LastBlockForUser;
         Vector3 endStickPosition = LevelManager.Instance.CurrentBlockForUser.StickController.EndStickPosition;
+        Vector3 perfectPosition = LevelManager.Instance.LastBlockForUser.PerfectPosition;
+        Vector2 perfectSize = LevelManager.Instance.LastBlockForUser.PerfectSize;
 
         if (nextPlatform.transform.position.x - nextPlatform.Width * 0.5f > endStickPosition.x)
         {
@@ -110,9 +112,18 @@ public class Player : BaseObject
         }
         else
         {
-            Debug.Log("Perfect");
+            Debug.Log("StopAtPlatform");
             stopPlayerAt = StopPlayerAt.Platform;
+
+            if(endStickPosition.x < perfectPosition.x + perfectSize.x && endStickPosition.x > perfectPosition.x - perfectSize.x)
+            {
+                GameManager.Instance.PerfectStick();
+                nextPlatform.Perfect();
+            }
+
         }
+            
+
         float distance = 0f;
         switch (stopPlayerAt)
         {

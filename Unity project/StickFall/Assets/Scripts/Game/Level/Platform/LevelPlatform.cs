@@ -10,7 +10,9 @@ public class LevelPlatform : BaseObject
     {
         None    = 0,
         Stick   = 1,
-        Stoper  = 2,
+        Stoper = 2,
+        Checker = 3,
+        Perfect = 4,
 
     }
 
@@ -21,14 +23,24 @@ public class LevelPlatform : BaseObject
         public Transform _transform;
     }
 
+    [System.Serializable]
+    struct MeshAndCollider
+    {
+        public GameObject _gameObject;
+        public BoxCollider2D _collider;
+    }
+
     #region Fields
 
-    [SerializeField] GameObject _meshes;
-    [SerializeField] BoxCollider2D _collider;
+    [Header("Mesh GO")]
+    [SerializeField] MeshAndCollider _platform;
+    [SerializeField] MeshAndCollider _perfect;
+
     [SerializeField] StickController _stick;
 
 
     [SerializeField] List<PlatformAnchors> _anchors;
+    [SerializeField] Vector2 perfectSize;
 
     bool isStickGrow;
 
@@ -56,6 +68,24 @@ public class LevelPlatform : BaseObject
             return _stick;
         }
     }
+
+    public Vector3 PerfectPosition
+    {
+        get
+        {
+            return _perfect._collider.transform.position;
+        }
+    }
+
+    public Vector2 PerfectSize
+    {
+        get
+        {
+            return perfectSize;
+        }
+    }
+
+    
 
     #endregion
 
@@ -92,12 +122,24 @@ public class LevelPlatform : BaseObject
     public void Init(float width)
     {
         Width = width;
-        _meshes.transform.localScale = new Vector3(width, 1f, 1f);
-        _collider.size = new Vector2(width, 100);
-        _collider.offset = new Vector2(0f, -50f);
-        PositionizeAnchor(PlatformAnchorsTypes.Stick);
+        _platform._gameObject.transform.localScale = new Vector3(Width, 1f, 1f);
+        _platform._collider.size = new Vector2(Width, 100);
+        _platform._collider.offset = new Vector2(0f, -50f);
 
+        PositionizeAnchor(PlatformAnchorsTypes.Stick);
         PositionizeAnchor(PlatformAnchorsTypes.Stoper);
+        PositionizeAnchor(PlatformAnchorsTypes.Perfect);
+
+        _perfect._gameObject.transform.localScale = new Vector3(perfectSize.x, perfectSize.y, 1f);
+        _perfect._collider.size = new Vector2(perfectSize.x, perfectSize.y);
+        _perfect._collider.offset = new Vector2(perfectSize.x, perfectSize.y * 0.5f);
+
+        _perfect._collider.gameObject.SetActive(true);
+        _perfect._gameObject.gameObject.SetActive(true);
+
+        _platform._collider.gameObject.SetActive(true);
+        _platform._gameObject.gameObject.SetActive(true);
+        
     }
 
     void PositionizeAnchor(PlatformAnchorsTypes _anchorType)
@@ -111,6 +153,10 @@ public class LevelPlatform : BaseObject
                 break;
 
             case PlatformAnchorsTypes.Stoper:
+                anchor._transform.localPosition = new Vector3(Width * 0.5f, 0f, 0f);
+                break;
+
+            case PlatformAnchorsTypes.Checker:
                 anchor._transform.localPosition = new Vector3(Width * 0.5f, 0f, 0f);
                 break;
         }
@@ -129,6 +175,12 @@ public class LevelPlatform : BaseObject
         }
     }
 
+    public void Perfect()
+    {
+        _perfect._collider.gameObject.SetActive(false);
+        _perfect._gameObject.gameObject.SetActive(false);
+    }
+
     #endregion
 
     PlatformAnchors TransformAnchorByType(PlatformAnchorsTypes _anchorType)
@@ -140,7 +192,7 @@ public class LevelPlatform : BaseObject
     {
         if (IsActive)
         {
-            _stick.StartGrow();
+            StickController.StartGrow();
             Debug.Log("StartGrow");
         }
     }
@@ -150,8 +202,8 @@ public class LevelPlatform : BaseObject
     {
         if (IsActive)
         {
-            _stick.StopGrow();
-            _stick.FallStick();
+            StickController.StopGrow();
+            StickController.FallStick();
             Debug.Log("StopGrow");
         }
     }
