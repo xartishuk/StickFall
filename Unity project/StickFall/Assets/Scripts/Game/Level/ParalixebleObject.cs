@@ -92,11 +92,11 @@ public class ParalixebleObject : BaseObject
     {
         if (isCameraFollow)
         {
-            CameraManager.OnCameraPositionChanged += ChangePositionByOffsetEvent;
+            CameraManager.OnCameraPositionChanged -= ChangePositionByOffsetEvent;
         }
         else
         {
-            PlayerManager.OnPlayerChangedPosition += ChangePositionByOffsetEvent;
+            PlayerManager.OnPlayerChangedPosition -= ChangePositionByOffsetEvent;
         }
         CameraManager.OnCameraPositionChanged -= CameraManager_OnCameraPositionChanged;
         GameManager.OnGameOver -= GameManager_OnGameOver;

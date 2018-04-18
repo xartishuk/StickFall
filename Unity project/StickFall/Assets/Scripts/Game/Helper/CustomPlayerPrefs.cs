@@ -16,7 +16,7 @@ public static class CustomPlayerPrefs
 
     public static int GetInt(string key, int defaultValue)
     {
-        return PlayerPrefs.GetInt(key, deg);
+        return PlayerPrefs.GetInt(key, defaultValue);
     }
 
 }

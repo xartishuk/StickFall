@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public enum ScreenState
 {
@@ -148,11 +149,16 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     public void TryKillPlayer()
     {
-        GameManager.Instance.StartGame();
         if (OnGameOver != null)
         {
             OnGameOver();
         }
+        SceneManager.LoadScene("Menu");
+        //GameManager.Instance.StartGame();
+        //if (OnGameOver != null)
+        //{
+        //    OnGameOver();
+        //}
     }
 
     public void PlayerStoped()
