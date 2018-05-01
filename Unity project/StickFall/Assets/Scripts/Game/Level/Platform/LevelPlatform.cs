@@ -69,6 +69,22 @@ public class LevelPlatform : BaseObject
         }
     }
 
+    public Vector3 LeftPosition
+    {
+        get
+        {
+            return transform.position + Vector3.left * Width * 0.5f;
+        }
+    }
+
+    public Vector3 RightPosition
+    {
+        get
+        {
+            return transform.position + Vector3.right * Width * 0.5f;
+        }
+    }
+
     public Vector3 PerfectPosition
     {
         get

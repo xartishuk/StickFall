@@ -19,6 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4684104885287958}
+  - component: {fileID: 114456340251408858}
   m_Layer: 0
   m_Name: GUIManager
   m_TagString: Untagged
@@ -39,3 +40,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114456340251408858
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1563987414238836}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0f9a1eacc6ed864eb039c476f19340d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _GUICamera: {fileID: 0}
+  _screensPrefabs:
+  - {fileID: 114990808759038494, guid: 7f56884003ed6c8458596a8db3be78e8, type: 2}
+  - {fileID: 114707312343993886, guid: 558e519daa66f8a4ba70c055639c7bb7, type: 2}
+  - {fileID: 114115470742107130, guid: 88145a466e5e3ac48b65a9ba55eb3e53, type: 2}

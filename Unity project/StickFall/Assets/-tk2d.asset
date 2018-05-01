@@ -704,6 +704,7 @@ MonoBehaviour:
     - cloud_big
     - mount2
     - mount1
+    - bonus
     spriteTextureGUIDs:
     - 3ce97fede5e994b49a1c34711b32e725
     - c8282c4a7fe3a6d4a86dea372f7c3069
@@ -713,6 +714,7 @@ MonoBehaviour:
     - a880385f30b7f604f97602a671baae73
     - 7b4039715f479d6409542ae1be525870
     - 8388b539622e2f247917e9d56e5c8bc1
+    - 912c5948cf741004d8b92319af14f3bc
     spriteTextureTimeStamps:
     - 1521340893.47763
     - 1521340808.86211
@@ -722,6 +724,7 @@ MonoBehaviour:
     - 1521340724.87731
     - 1521343342.39494
     - 1521343348.8618
+    - 1525200477.62349
     managedSpriteCollection: 0
     loadable: 0
     assetName: 

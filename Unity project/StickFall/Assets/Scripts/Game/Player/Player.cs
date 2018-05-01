@@ -161,5 +161,28 @@ public class Player : BaseObject
         });
     }
 
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        ColliderReporter colliderReporter = collision.GetComponent<ColliderReporter>();
+        if(colliderReporter != null)
+        {
+            if(colliderReporter.ColliderType == ColliderType.BonusCollider)
+            {
+                BonusItem bonusItem = ((BonusItem)colliderReporter.ColliderHandler);
+
+                int currentBonusValue = bonusItem.Value;
+
+                bonusItem.PickBonus();
+                BonusWherePicked(currentBonusValue);
+            }
+        }
+    }
+
     #endregion
+
+    void BonusWherePicked(int bonusValue)
+    {
+        CommonStats.Money += bonusValue;
+    }
 }

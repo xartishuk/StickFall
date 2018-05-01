@@ -111,7 +111,7 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
     private void Start()
     {
-        StartGame();
+        GUIManager.Instance.Show(ScreenGeneral.ScreenType.MainMenu);
     }
 
 
@@ -137,6 +137,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         LevelManager.Instance.GenerateStartLevel();
         CameraManager.Instance.Respawn();
         CurrentGameState = GameState.AwakeTap;
+        GUIManager.Instance.Show(ScreenGeneral.ScreenType.GameScreen);
+        BonusManager.Instance.SpawnBonus(new Vector3(100f, 100f, 100f));
     }
 
     public void PlayerStarted()
@@ -153,7 +155,9 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
         {
             OnGameOver();
         }
-        SceneManager.LoadScene("Menu");
+
+        GUIManager.Instance.Show(ScreenGeneral.ScreenType.MainMenu);
+
         //GameManager.Instance.StartGame();
         //if (OnGameOver != null)
         //{

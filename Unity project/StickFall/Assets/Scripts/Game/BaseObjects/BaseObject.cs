@@ -13,7 +13,8 @@ public class BaseObject : MonoBehaviour, IPoolCallback, IOnColliderHandler
     #endregion
 
     #region Properties
-
+    
+    
     protected Transform CachedTransform
     {
         get

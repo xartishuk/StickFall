@@ -123,6 +123,12 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
             _platformsOnScreen[0].gameObject.ReturnToPool();
             _platformsOnScreen.Remove(_platformsOnScreen[0]);
         }
+
+        float bonusPosition = _platformsOnScreen[_platformsOnScreen.Count - 2].RightPosition.x + (_platformsOnScreen[_platformsOnScreen.Count - 1].RightPosition - _platformsOnScreen[_platformsOnScreen.Count - 2].LeftPosition).x;
+
+        BonusManager.Instance.SpawnBonus(new Vector3(bonusPosition, 100f, 100f));
+
+
     }
 
     void ClearLevel()

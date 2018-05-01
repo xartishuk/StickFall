@@ -7,6 +7,9 @@ public enum ColliderType
     None = 0,
     PlatformStoper = 1,
 
+
+    BonusCollider = 50,
+
     StickChecker = 99,
     StickStoper = 100,
     CameraCollider = 101,
