@@ -174,8 +174,8 @@ public class GameManager : SingletonMonoBehaviour<GameManager>
 
         CurrentGameState = GameState.AwakeTap;
 
-        float distance = Random.Range(50f, 300f);
-        float width = Random.Range(150f, 400f);
+        float distance = Random.Range(50f, 250f);
+        float width = Random.Range(125f, 200f);
 
         LevelManager.Instance.GenerateNextPlatform(distance, width);
     }
