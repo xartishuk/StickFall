@@ -83,8 +83,8 @@ public class LevelManager : SingletonMonoBehaviour<LevelManager>
 
         GenerateFirstPlatform();
 
-        float distance = Random.Range(50f, 300f);
-        float width = Random.Range(150f, 400f);
+        float distance = Random.Range(50f, 250f);
+        float width = Random.Range(125f, 200f);
 
         GenerateNextPlatform(distance, width);
 
